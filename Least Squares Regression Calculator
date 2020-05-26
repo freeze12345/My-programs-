@@ -1,0 +1,168 @@
+import java.util.*;
+import java.util.ArrayList;
+import java.lang.Math;
+
+class Main {
+  public static void main(String[] args) {
+    Scanner reader = new Scanner(System.in);
+   //Input for the coordinates
+    System.out.println("Input your X and Y coordinate");
+    double Xcord = reader.nextInt();
+    double Ycord = reader.nextInt();
+    int option = 1;
+
+    List<Double> inputX = new ArrayList<Double>();
+    List<Double> inputY = new ArrayList<Double>();
+
+    inputX.add(Xcord);
+    inputY.add(Ycord);
+    while(option == 1){
+
+      System.out.println("Input next X and Y coordinate and after that type 1 to add another number and 0 to stop");
+
+      Xcord = reader.nextInt();
+      Ycord = reader.nextInt();
+
+      inputX.add(Xcord);
+      inputY.add(Ycord);  
+
+      option = reader.nextInt();
+    }
+    //Initializing the matrixes
+    int Xlen = inputX.size();
+    
+    double[][] arrayX = new double[Xlen][2];
+    double[][] arrayY = new double[Xlen][1];
+
+    for(int i = 0; i < Xlen; i++){
+      arrayX[i][0] = 1;
+      arrayX[i][1] = inputX.get(i);
+
+      arrayY[i][0] = inputY.get(i);
+    }
+
+    double[][] Xtrans = new double[2][Xlen];
+    
+    for(int i = 0; i < Xlen; i++){
+      Xtrans[0][i] = 1;
+      Xtrans[1][i] = inputX.get(i);
+    }
+    //Calculating the inverse
+    double mat11 = 0;
+    double mat12 = 0;
+    double mat21 = 0;
+    double mat22 = 0;
+
+    for(int i = 0; i < Xlen; i++){
+      mat11 += Xtrans[0][i]*arrayX[i][0];
+      mat12 += Xtrans[0][i]*arrayX[i][1];
+      mat21 += Xtrans[1][i]*arrayX[i][0];
+      mat22 += Xtrans[1][i]*arrayX[i][1];
+    }
+
+      double det = mat11*mat22 - mat12*mat21;
+
+      double mult = 1/det;
+
+      double[][] inverse = new double[2][2];
+
+      inverse[0][0] = mult*mat22;
+      inverse[0][1] = mult*mat12*(-1);
+      inverse[1][0] = mult*mat21*(-1);
+      inverse[1][1] = mult*mat11;
+      
+      double matrix1 = 0;
+      double matrix2 = 0;
+      //Using the formula using matrixes to get my formula: Linear Algbra concept
+      for(int i = 0; i < Xlen; i++){
+        matrix1 += Xtrans[0][i]*arrayY[i][0];
+        matrix2 += Xtrans[1][i]*arrayY[i][0];
+      }
+      System.out.println("");
+      double a = inverse[0][0]*matrix1 + inverse[0][1]*matrix2;
+      double b = inverse[1][0]*matrix1 + inverse[1][1]*matrix2;
+
+      if(b > 0){
+        System.out.println("Linear Regression Line: ŷ = "+ a +"+"+ b + "x");
+      }
+      else if(b < 0){
+        System.out.println("Linear Regression Line: ŷ = "+ a +""+ b + "x");
+      }
+      else{
+        System.out.println("Linear Regression Line: ŷ = "+ a);
+      }
+      //residuals
+      List<Double> predicted = new ArrayList<Double>();
+      List<Double> residual = new ArrayList<Double>();
+      double pred;
+      double resid;
+      for(int i = 0; i < Xlen; i++){
+        pred = a+b*(inputX.get(i));
+        predicted.add(pred);
+        resid = inputY.get(i) - predicted.get(i);
+        residual.add(resid);
+      }
+      System.out.println("");
+      System.out.println("Your residuals are: " + residual);
+      System.out.println("");
+      //coefficient of determination to show how strong the data relates to linear model
+      double multSum = 0;
+      double Xsum = 0;
+      double XsquaredSum = 0;
+      double Ysum = 0;
+      double YsquaredSum = 0;
+      for(int i = 0; i < Xlen; i++){
+        multSum += inputX.get(i)*inputY.get(i);
+        Xsum += inputX.get(i);
+        Ysum += inputY.get(i);
+        XsquaredSum += inputX.get(i)*inputX.get(i);
+        YsquaredSum += inputY.get(i)*inputY.get(i);
+      }
+      double numerator = Xlen*multSum - Xsum*Ysum;
+      double denominatorX = Xlen*XsquaredSum - Xsum*Xsum;
+      double denominatorY = Xlen*YsquaredSum - Ysum*Ysum;
+      double denominator = Math.sqrt(denominatorX*denominatorY);
+      double r = numerator/denominator;
+
+      System.out.println("The coefficient of determination is: "+r);
+
+      System.out.println("");
+      System.out.println((r*r*100) + "% of variation in y can be described by the LSRL on x");
+      System.out.println("");
+      //Summary of the relationships
+      if(r >= 0.7){
+        System.out.println("Strength: Very strong positive relationship");
+      }
+      if(r >= 0.4 && r <= 0.69){
+        System.out.println("Strength: Strong positive relationship");
+      }
+      if(r >= 0.3 && r <= 0.39){
+        System.out.println("Strength:Moderate positive relationship");
+      }
+      if(r >= 0.2 && r <= 0.29){
+        System.out.println("Strength: Weak positive relationship");
+      }
+      if(r >= 0.01 && r <= 0.19){
+        System.out.println("Strength: No or negligible relationship");
+      }
+      if(r >= -0.009 && r <= 0.009){
+        System.out.println("Strength: No relationship");
+      }
+      if(r >= -0.19 && r <= -0.01){
+        System.out.println("Strength: No or negligible relationship");
+      }
+      if(r >= -0.29 && r <= -0.2){
+        System.out.println("Strength: Weak negative relationship");
+      }
+      if(r >= -0.39 && r <= -0.3){
+        System.out.println("Strength: Moderate negative relationship");
+      }
+      if(r >= -0.69 && r <= -0.4){
+        System.out.println("Strength: Strong negative relationship");
+      }
+      if(r <= -0.7){
+        System.out.println("Strength: Very strong negative relationship");
+      }
+
+  }
+}
