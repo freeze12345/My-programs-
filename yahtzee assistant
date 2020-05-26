@@ -1,0 +1,97 @@
+
+import java.util.Scanner;
+class Main {
+  public static void main(String[] args) {
+    Scanner reader = new Scanner(System.in);
+
+    System.out.println("What is you x1 value?");
+    float x1 = reader.nextInt();
+    System.out.println("What is you y1 value?");
+    float y1 = reader.nextInt();
+    System.out.println("What is you z1 value?");
+    float z1 = reader.nextInt();
+    System.out.println("What does your equation 1 equal to?");
+
+    float ans1 = reader.nextInt();
+    System.out.println("What is you x2 value?");
+    float x2 = reader.nextInt();
+    System.out.println("What is you y2 value?");
+    float y2 = reader.nextInt();
+    System.out.println("What is you z2 value?");
+    float z2 = reader.nextInt();
+    System.out.println("What does your equation 2 equal to?");
+
+    float ans2 = reader.nextInt();
+    System.out.println("What is you x3 value?");
+    float x3 = reader.nextInt();
+    System.out.println("What is you y3 value?");
+    float y3 = reader.nextInt();
+    System.out.println("What is you z3 value?");
+    float z3 = reader.nextInt();
+    System.out.println("What does your equation 3 equal to?");
+    float ans3 = reader.nextInt();
+
+    float[][] array = new float[3][3];
+
+    array[0][0] = x1;
+    array[0][1] = y1;
+    array[0][2] = z1;
+
+    array[1][0] = x2;
+    array[1][1] = y2;
+    array[1][2] = z2;
+
+    array[2][0] = x3;
+    array[2][1] = y3;
+    array[2][2] = z3;
+    
+    float[][] answer = new float[3][1];
+
+    answer[0][0] = ans1;
+    answer[1][0] = ans2;
+    answer[2][0] = ans3;
+    
+    float cofac00 = array[1][1]*array[2][2] - array[1][2]*array[2][1];
+    float cofac01 = (array[1][0]*array[2][2] - array[2][0]*array[1][2])*(-1);
+    float cofac02 = array[1][0]*array[2][1] - array[2][0]*array[1][1];
+    float cofac10 = (array[0][1]*array[2][2] - array[2][1]*array[0][2])*(-1);
+    float cofac11 = array[0][0]*array[2][2] - array[2][0]*array[0][2];
+    float cofac12 = (array[0][0]*array[2][1] - array[2][0]*array[0][1])*(-1);
+    float cofac20 = array[0][1]*array[1][2] - array[1][1]*array[0][2];
+    float cofac21 = (array[0][0]*array[1][2] - array[1][0]*array[0][2])*(-1);
+    float cofac22 = array[0][0]*array[1][1] - array[1][0]*array[0][1];
+
+    float[][] adj  = new float[3][3];
+
+    float subdet1 = array[1][1]*array[2][2] - array[1][2]*array[2][1];
+    float subdet2 = array[1][0]*array[2][2] - array[1][2]*array[2][0];
+    float subdet3 = array[1][0]*array[2][1] - array[2][0]*array[1][1];
+
+    float det = array[0][0]*subdet1 - array[0][1]*subdet2 + array[0][2]*subdet3;
+
+    if(det != 0){
+      float mult = 1/det;
+
+      adj[0][0] = mult*cofac00;
+      adj[0][1] = mult*cofac10;
+      adj[0][2] = mult*cofac20;
+      adj[1][0] = mult*cofac01;
+      adj[1][1] = mult*cofac11;
+      adj[1][2] = mult*cofac21;
+      adj[2][0] = mult*cofac02;
+      adj[2][1] = mult*cofac12;
+      adj[2][2] = mult*cofac22;
+
+      float x = adj[0][0]*answer[0][0] + adj[0][1]*answer[1][0] + adj[0][2]*answer[2][0];
+
+      float y = adj[1][0]*answer[0][0] + adj[1][1]*answer[1][0] + adj[1][2]*answer[2][0];
+
+      float z = adj[2][0]*answer[0][0] + adj[2][1]*answer[1][0] + adj[2][2]*answer[2][0];
+
+      System.out.println("Your x value is: " + x);
+      System.out.println("Your y value is: " + y);
+      System.out.println("Your z value is: " + z);
+    }
+  
+  }
+}
