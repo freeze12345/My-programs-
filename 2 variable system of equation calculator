@@ -1,0 +1,76 @@
+import java.util.Scanner;
+class Main {
+  public static void main(String[] args) {
+    Scanner reader = new Scanner(System.in);
+  
+    //Get inputs for the equations
+    System.out.println("What is your x1 value");
+    float x1 = reader.nextInt();
+    System.out.println("What is your y1 value");
+    float y1 = reader.nextInt();
+    System.out.println("What does your first equation equate to?");
+    float ans1 = reader.nextInt();
+    System.out.println("What is your x2 value");
+    float x2 = reader.nextInt();
+    System.out.println("What is your y2 value");
+    float y2 = reader.nextInt();
+    System.out.println("What does your second equation equate to?");
+    float ans2 = reader.nextInt();
+
+    //Create augmented matrix
+    float[][] array = new float[2][2];
+
+    //Create result array
+    float[][] ans = new float[2][1];
+
+    //Set up result array
+    ans[0][0] = ans1;
+    ans[1][0] = ans2;
+
+    //Input values into augmented matrix
+    array[0][0] = x1;
+    array[0][1] = y1;
+    array[1][0] = x2;
+    array[1][1] = y2;
+
+    //Calculate determinant
+    float det = (array[0][0]*array[1][1]) - (array[0][1]*array[1][0]);
+
+    if(det != 0){
+      //Find the multiplier for the inverse matrix
+      float mult = 1/det;
+
+      //Create inverse matrix
+      float[][] inverse = new float[2][2];
+
+      //Add values to inverse matrix
+      inverse[0][0] = mult*array[1][1];
+      inverse[0][1] = mult*array[0][1]*(-1);
+      inverse[1][0] = mult*array[1][0]*(-1);
+      inverse[1][1] = mult*array[0][0];
+
+      //Multiply inverse with the answer to get the x y values
+      float x = inverse[0][0]*ans[0][0] + inverse[0][1]*ans[1][0];
+      float y = inverse[1][0]*ans[0][0] + inverse[1][1]*ans[1][0];
+
+      //Print answers
+      System.out.println("The x value is: " + x);
+      System.out.println("The y value is: " + y);
+    }
+    else{
+      //Set up the checking varible to see if there is 0 or infine solutions
+      float ratio = x1/y1;
+      float checker = ans2*ratio;
+      
+      //Check whether there is an infinte number of solutions or no solutions
+      if(checker == ans1){
+        System.out.println("The system of equations has an infinite number of solutions");
+      }
+      else{
+        System.out.println("The system of equations has no solutions");
+      }
+  
+    }
+
+  }
+}
