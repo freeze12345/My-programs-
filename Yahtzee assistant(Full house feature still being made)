@@ -1,0 +1,213 @@
+import math
+def probabilityCalc(left, needed):
+  difference = left-needed
+  topFactorial = 1
+  for x in range(1,left+1):
+    topFactorial = topFactorial * x
+  bottomFactorial = 1
+  for x in range(1,needed+1):
+    bottomFactorial = bottomFactorial * x
+  diffFactorial = 1
+  for x in range(1,left - needed+1):
+    diffFactorial = diffFactorial * x
+  combinations = topFactorial/  (bottomFactorial*diffFactorial)
+
+  probability = (combinations)*((1/6)**needed)*((5/6)**difference)*100
+
+  return probability
+class color:
+   PURPLE = '\033[95m'
+   CYAN = '\033[96m'
+   DARKCYAN = '\033[36m'
+   BLUE = '\033[94m'
+   GREEN = '\033[92m'
+   YELLOW = '\033[93m'
+   RED = '\033[91m'
+   BOLD = '\033[1m'
+   UNDERLINE = '\033[4m'
+   END = '\033[0m'  
+
+#Input from the user
+userRolls = []
+print("What were the rolls of the 5 dice?")
+for x in range(1,6):
+  userInput = int(input("What was the number rolled on dice #" + str(x) + ": "))
+  while(userInput not in range(1,7)):
+    print("Please input a valid dice roll")
+    userInput = int(input("What was the number rolled on dice #" + str(x) + ": "))
+  userRolls.append(userInput)
+
+#Finding the frequency for each roll
+counter =  0;
+freqRolls = []
+for x in range(1,7):
+  for y in range(5):
+    if(x == userRolls[y]):
+      counter = counter + 1
+  freqRolls.append(counter)
+  counter = 0
+
+diceNeeded = 5 - max(freqRolls)
+
+number = 0
+print("")
+print(color.UNDERLINE + "3 and 4 of a kind probabilities:" + color.END)
+#Probability of a 3 of a kind
+leftForThreeOfKind = 0
+for x in range(6):
+  if(freqRolls[x] == 3):
+    print(color.DARKCYAN + "You have a three of a kind in " + str(x+1) + "'s." + color.END)
+    if(freqRolls[x] == max(freqRolls)):
+      leftForFourOfKind = 4 - max(freqRolls)
+      print("The best chance of a 4 of a kind is for " + str(x+1) + "'s is " + str(round(probabilityCalc(diceNeeded, leftForFourOfKind),3)) + "%")
+
+
+  elif(freqRolls[x] == 4):
+    print(color.CYAN + "You have a four of a kind in " + str(x+1) + "'s." + color.END)
+  else:
+    if(freqRolls[x] == max(freqRolls)):
+      number = x+1
+      leftForThreeOfKind = 3 - max(freqRolls)
+      print("The best chance of a 3 of a kind is for " + str(number) + "'s is " + str(round(probabilityCalc(diceNeeded, leftForThreeOfKind),3)) + "%")
+
+      leftForFourOfKind = 4 - max(freqRolls)
+      print("The best chance of a 4 of a kind is for " + str(number) + "'s is " + str(round(probabilityCalc(diceNeeded, leftForFourOfKind),3)) + "%")
+
+#Probability of a full house
+print("")
+print(color.UNDERLINE + "Full House Probabilities:" + color.END)
+fullhouse = 0
+closeFullHouse = [0,0,0,0,0]
+fullHouseCheck = [0,0,0,0,0]
+fullHouseList = []
+for x in range(1,7):
+  for y in range(1,7):
+    if(x != y):
+      fullHouseCheck = [x,x,x,y,y]
+      if(freqRolls[x-1] > 3):
+        print(freqRolls[x-1])
+        fullhouse = fullhouse + 3
+      else:
+        fullhouse = fullhouse + freqRolls[x-1]
+      if(freqRolls[y-1] > 2):
+        fullhouse = fullhouse + 2
+      else:
+        fullhouse = fullhouse + freqRolls[y-1]
+      fullHouseList.append(fullhouse)
+    fullhouse = 0
+if(5 in fullHouseList):
+  for z in range(30):
+    if(fullHouseList[z] == 5):
+      firstThreeNum1 = math.ceil((z)/5)
+      lastTwoNum1 = (z)%5
+      closeFullHouse1 = [firstThreeNum1, firstThreeNum1, firstThreeNum1, lastTwoNum1, lastTwoNum1]
+      print(color.YELLOW + "You have a full house of '" + str(closeFullHouse1[0]) + ", " + str(closeFullHouse1[1]) + ", " + str(closeFullHouse1[2]) + ", " + str(closeFullHouse1[3]) + ", " + str(closeFullHouse1[4]) + "' case" + 
+      color.END)
+print("STILL UNDER CONSTRUCTION")
+
+#else:
+ # for x in range(30):
+  #  if(fullHouseList[x] == max(fullHouseList)):
+   #   firstThreeNum = math.floor((x+1)/5)
+    #  lastTwoNum = (x+1)%5
+     # probabilityCalc(3 - freqRolls[firstThreeNum - 1])
+
+
+#Probability of a small straight
+print("")
+print(color.UNDERLINE + "Small Straight Probabilities:" + color.END)
+#1234 case
+case1Score = 0
+#2345 case
+case2Score = 0
+#3456 case
+case3Score = 0
+if(1 in userRolls):
+  case1Score = case1Score + 1
+if(2 in userRolls):
+  case1Score = case1Score + 1
+  case2Score = case2Score + 1
+if(3 in userRolls):
+  case1Score = case1Score + 1
+  case2Score = case2Score + 1
+  case3Score = case3Score + 1
+if(4 in userRolls):
+  case1Score = case1Score + 1
+  case2Score = case2Score + 1
+  case3Score = case3Score + 1
+if(5 in userRolls):
+  case2Score = case2Score + 1
+  case3Score = case3Score + 1
+if(6 in userRolls):
+  case3Score = case3Score + 1
+
+caseComparison = [case1Score, case2Score, case3Score]
+if(case1Score == 4):
+  print(color.BOLD + color.PURPLE + "You have a short strait '1, 2, 3, 4'" + color.END)
+if(case2Score == 4):
+  print(color.BOLD + color.PURPLE + "You have a short strait '2, 3, 4, 5'" + color.END)
+if(case3Score == 4):
+  print(color.BOLD + color.PURPLE + "You have a short strait '3, 4, 5, 6'" + color.END)
+elif(case1Score != 4 and case2Score != 4 and case3Score != 4):
+  for x in range(3):
+    if(caseComparison[x] == max(caseComparison)):
+      if(x == 0):
+        straightProbability = probabilityCalc(5 - case1Score, 4 - case1Score)
+        print("The best chance of a short straight is the '1, 2, 3, 4' case with a probability of " + str(round(straightProbability,3))+ "%")
+      if(x == 1):
+        straightProbability = probabilityCalc(5 - case2Score, 4 - case2Score)
+        print("The best chance of a short straight is the '2, 3, 4, 5' case with a probability of " + str(round(straightProbability,3))+ "%")
+      if(x == 2):
+        straightProbability = probabilityCalc(5 - case3Score, 4 - case3Score)
+        print("The best chance of a short straight is the '3, 4, 5, 6' case with a probability of " + str(round(straightProbability,3))+ "%")
+
+print("")
+print(color.UNDERLINE + "Large Straight Probabilities:" + color.END)
+#Probability of a large straight
+#12345 case
+longCase1 = 0
+#23456 case
+longCase2 = 0
+
+if(1 in userRolls):
+  longCase1 = longCase1 + 1
+if(2 in userRolls):
+  longCase1 = longCase1 + 1
+  longCase2 = longCase2 + 1
+if(3 in userRolls):
+  longCase1 = longCase1 + 1
+  longCase2 = longCase2 + 1
+if(4 in userRolls):
+  longCase1 = longCase1 + 1
+  longCase2 = longCase2 + 1
+if(5 in userRolls):
+  longCase1 = longCase1 + 1
+  longCase2 = longCase2 + 1
+if(6 in userRolls):
+  longCase2 = longCase2 + 1
+if(longCase1 == 5):
+  print(color.BOLD + color.GREEN + "YOU HAVE A LONG STRAIGHT '1, 2, 3, 4, 5'!!!" + color.END)
+if(longCase2 == 5):
+  print(color.BOLD + color.GREEN + "YOU HAVE A LONG STRAIGHT '2, 3, 4, 5, 6'!!!" + color.END)
+elif(longCase1 != 5 and longCase2 != 5):
+  if(longCase1 > longCase2):
+    longStraight = probabilityCalc(5 - longCase1, 5 - longCase1)
+    print("The best chance of a long straight is the '1, 2, 3, 4, 5' case with a probability of " + str(round(longStraight,3))+ "%")
+  if(longCase1 < longCase2):
+    longStraight = probabilityCalc(5 - longCase2, 5 - longCase2)
+    print("The best chance of a long straight is the '2, 3, 4, 5' case with a probability of " + str(round(longStraight,3))+ "%")
+  if(longCase1 == longCase2):
+    longStraight = probabilityCalc(5 - longCase1, 5 - longCase1)
+    print("Both the '1, 2, 3, 4, 5' and the '2, 3, 4, 5, 6' long straights have the same chance of being picked of " + str(round(longStraight,3))+ "%")
+
+print("")
+print(color.UNDERLINE + "Yahtzee Probabilities:" + color.END)
+#Probability of a yahtzee
+for x in range(6):
+  if(freqRolls[x] == max(freqRolls)):
+    number = x+1
+    yahtzeeProbability = ((1/6)**diceNeeded)*100
+    if(yahtzeeProbability == 100.00):
+      print(color.BOLD + color.CYAN + "YOU HAVE A YAHTZEE IN " + str(number) + "'S!!!" + color.END)
+    else:
+      print("The best chance of a Yahtzee is of " + str(number) + "'s and is " + str(round(yahtzeeProbability, 3)) + "%")
