@@ -1,0 +1,397 @@
+import random
+import time
+team1 = input("What is team one's name? ")
+team2 = input("What is team two's name? ")
+o1 = input("What is " + team1 + "'s  overall? ")
+o2 = input("What is " + team2 + "'s  overall? ")
+ovr1 = int(o1)*int(o1)
+ovr2 = int(o2)*int(o2)
+gamesummary1 = []
+gamesummary2 = []
+ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+extratime1 = random.randint(0,7)
+team1score = 0
+team2score = 0
+pos = 12
+for x in range(0, 46+extratime1):
+    time.sleep(0.5)
+    print("")
+    if(x == 45):
+        print("Added time of " + str(extratime1) + " minutes")
+    if(x <= 45):
+        print(str(x)+"'")
+    elif(x > 45):
+        print("45+"+ str(x - 45) +"'")
+    print(ballposition)
+    team1roll = 0
+    team2roll = 0
+    while (team1roll == team2roll):
+        team1roll = random.randint(0,int(ovr1))
+        team2roll = random.randint(0,int(ovr2))
+    ball = ballposition.index(1)
+    if(team1roll > team2roll):
+        ballposition[ball] = 0
+        ballposition[ball-1] = 1
+        
+    elif(team1roll < team2roll):
+        ballposition[ball] = 0
+        ballposition[ball+1] = 1      
+        
+    if(ballposition[0] == 1):
+        team1score = team1score + 1
+        print(team1 + " SCORES!")
+        ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+        print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+        print("")
+        time.sleep(3)
+        if(x <= 45):
+            gamesummary1.append("⚽" +str(x)+"'")
+        elif(x > 45):
+            gamesummary1.append("⚽" +"45+"+ str(x - 45) +"'")
+    elif(ballposition[pos] == 1):
+        team2score = team2score + 1
+        print(team2 + " SCORES!")
+        ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+        if(x <= 45):
+            gamesummary2.append("⚽" +str(x)+"'")
+        elif(x > 45):
+            gamesummary2.append("⚽" +"45+"+ str(x - 45) +"'")
+        print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+        print("")
+        time.sleep(3)
+print("")        
+print("HALFTIME SCORE")
+print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+print("")
+if((team1score + team2score) >= 1):
+    print(team1 + " goals:")
+    for a in range(0, len(gamesummary1)):
+            print(gamesummary1[a])
+    print(team2 + " goals:")
+    for a in range(0, len(gamesummary2)):
+            print(gamesummary2[a])
+time.sleep(5)  
+print("")
+ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+extratime2 = random.randint(0,7)
+for x in range(45, 91+extratime2):
+    print("")
+    time.sleep(0.5)
+    if(x == 90):
+        print("Added time of " + str(extratime2) + " minutes")
+    if(x <= 90):
+        print(str(x)+"'")
+    elif(x > 90):
+        print("90+"+ str(x - 90) +"'")
+    print(ballposition)
+    team1roll = 0
+    team2roll = 0
+    while (team1roll == team2roll):
+        team1roll = random.randint(0,int(ovr1))
+        team2roll = random.randint(0,int(ovr2))
+    ball = ballposition.index(1)
+    if(team1roll > team2roll):
+        ballposition[ball] = 0
+        ballposition[ball-1] = 1
+    elif(team1roll < team2roll):
+        ballposition[ball] = 0
+        ballposition[ball+1] = 1
+        
+    if(ballposition[0] == 1):
+        team1score = team1score + 1
+        print(team1 + " SCORES!")
+        ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+        if(x <= 90):
+            gamesummary1.append("⚽" +str(x)+"'")
+        elif(x > 90):
+            gamesummary1.append("⚽" +"90+"+ str(x - 90) +"'")
+        print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+        print("")
+        time.sleep(3)
+    elif(ballposition[pos] == 1):
+        team2score = team2score + 1
+        print(team2 + " SCORES!")
+        ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+        if(x <= 90):
+            gamesummary2.append("⚽" +str(x)+"'")
+        elif(x > 90):
+            gamesummary2.append("⚽" +"90+"+ str(x - 90) +"'")
+        print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+        print("")
+        time.sleep(3)
+
+print("")
+print("END OF 90' SCORE")
+print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))        
+
+if(team1score > team2score):
+    print(team1 + " WINS THE GAME!!!")
+if(team2score > team1score):
+    print(team2 + " WINS THE GAME!!!")
+print("")
+if((team1score + team2score) >= 1):
+    print(team1 + " goals:")
+    for a in range(0, len(gamesummary1)):
+        print(gamesummary1[a])
+    print(team2 + " goals:")
+    for a in range(0, len(gamesummary2)):
+        print(gamesummary2[a])
+time.sleep(10)
+print("")
+
+extratime3 = random.randint(0,7)
+ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+if(team1score == team2score):
+    print("EXTRATIME!")
+    for x in range(90, 106+extratime3):
+        print("")
+        time.sleep(0.5)
+        if(x == 105):
+            print("Added time of " + str(extratime3) + " minutes")
+        if(x <= 105):
+            print(str(x)+"'")
+        elif(x > 105):
+            print("105+"+ str(x - 105) +"'")
+        print(ballposition)
+        team1roll = 0
+        team2roll = 0
+        while (team1roll == team2roll):
+            team1roll = random.randint(0,int(ovr1))
+            team2roll = random.randint(0,int(ovr2))
+        ball = ballposition.index(1)
+        if(team1roll > team2roll):
+            ballposition[ball] = 0
+            ballposition[ball-1] = 1
+        elif(team1roll < team2roll):
+            ballposition[ball] = 0
+            ballposition[ball+1] = 1
+        
+        if(ballposition[0] == 1):
+            team1score = team1score + 1
+            print(team1 + " SCORES!")
+            ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+            if(x <= 105):
+                gamesummary1.append("⚽" +str(x)+"'")
+            elif(x > 105):
+                gamesummary1.append("⚽" +"105+"+ str(x - 105) +"'")
+            print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+            print("")
+            time.sleep(3)
+        elif(ballposition[pos] == 1):
+            team2score = team2score + 1
+            print(team2 + " SCORES!")
+            ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+            if(x <= 105):
+                gamesummary2.append("⚽" +str(x)+"'")
+            elif(x > 105):
+                gamesummary2.append("⚽" +"105+"+ str(x - 105) +"'")
+            print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+            print("")
+            time.sleep(3)
+            
+    print("")     
+    print("FIRST HALF OF EXTRATIME SCORE")
+    print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+    print("")
+    if((team1score + team2score) >= 1):
+        print(team1 + " goals:")
+        for a in range(0, len(gamesummary1)):
+            print(gamesummary1[a])
+        print(team2 + " goals:")
+        for a in range(0, len(gamesummary2)):
+            print(gamesummary2[a])
+    time.sleep(5)
+    print("")
+
+    ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+    extratime4 = random.randint(0,7)
+    for x in range(105, 121+extratime4):
+        print("")
+        time.sleep(0.5)
+        if(x == 120):
+            print("Added time of " + str(extratime4) + " minutes")
+        if(x <= 120):
+            print(str(x)+"'")
+        elif(x > 120):
+            print("120+"+ str(x - 120) +"'")
+        print(ballposition)
+        team1roll = 0
+        team2roll = 0
+        while (team1roll == team2roll):
+            team1roll = random.randint(0,int(ovr1))
+            team2roll = random.randint(0,int(ovr2))
+        ball = ballposition.index(1)
+        if(team1roll > team2roll):
+            ballposition[ball] = 0
+            ballposition[ball-1] = 1
+        elif(team1roll < team2roll):
+            ballposition[ball] = 0
+            ballposition[ball+1] = 1
+            
+        if(ballposition[0] == 1):
+            team1score = team1score + 1
+            print(team1 + " SCORES!")
+            ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+            if(x <= 120):
+                gamesummary1.append("⚽" + str(x)+"'")
+            elif(x > 120):
+                gamesummary1.append("⚽" +"120+"+ str(x - 120) +"'")
+            print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+            print("")
+            time.sleep(3)
+        elif(ballposition[pos] == 1):
+            team2score = team2score + 1
+            print(team2 + " SCORES!")
+            ballposition = [0,0,0,0,0,0,1,0,0,0,0,0,0]
+            if(x <= 120):
+                gamesummary2.append("⚽" +str(x)+"'")
+            elif(x > 120):
+                gamesummary2.append("⚽" +"120+"+ str(x - 120) +"'")
+            print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+            print("")
+            time.sleep(3)
+    print("")
+    print("END OF EXTRATIME SCORE")
+    print(team1 + " - " +  str(team1score) +" || " + team2 + " - " + str(team2score))
+
+    if(team1score > team2score):
+        print(team1 + " WINS THE GAME!!!")
+    if(team2score > team1score):
+        print(team2 + " WINS THE GAME!!!")
+    print("")
+    if((team1score + team2score) >= 1):
+        print(team1 + " goals:")
+        for a in range(0, len(gamesummary1)):
+            print(gamesummary1[a])
+        print(team2 + " goals:")
+        for a in range(0, len(gamesummary2)):
+            print(gamesummary2[a])
+    time.sleep(10)
+    print("")
+    if(team1score == team2score):
+        penround = 0
+        wincondition = "false"
+        penkick1 = 0
+        pendef1 = 0
+        pen1score = 0
+        pen1summary = []
+        penkick2 = 0
+        pendef2 = 0
+        pen2score = 0
+        pen2summary = []
+        print("")
+        print("PENALTIES")
+        print("")
+        while((penround <= 5) and (wincondition != "true")):
+            penround = penround + 1
+            print("")
+            print("Penalty Round: " + str(penround))
+            print("")
+            time.sleep(1)
+            penkick1 = random.randint(0,int(ovr1))
+            pendef1 = random.randint(0,int(ovr2))
+            print(team1 + " gets ready for the kick")
+            print("")
+            time.sleep(2)
+            if(penkick1 >= pendef1):
+                print(team1 + " PUTS IT IN!")
+                pen1score = pen1score + 1
+                print(team1 + " - " +  str(pen1score) +" || " + team2 + " - " + str(pen2score))
+                print("")
+                time.sleep(2)
+                pen1summary.append("✓")
+            elif(penkick1 < pendef1):
+                print(team1 + " MISSES!")
+                print(team1 + " - " +  str(pen1score) +" || " + team2 + " - " + str(pen2score))
+                print("")
+                time.sleep(2)
+                pen1summary.append("✗")
+
+            print("")
+            print(team2 + " gets ready for the kick")
+            print("")
+            time.sleep(2)
+            penkick2 = random.randint(0,int(ovr2))
+            pendef2 = random.randint(0,int(ovr1))
+            if(penkick2 >= pendef2):
+                print(team2 + " PUTS IT IN!")
+                pen2score = pen2score + 1
+                print(team1 + " - " +  str(pen1score) +" || " + team2 + " - " + str(pen2score))
+                print("")
+                time.sleep(2)
+                pen2summary.append("✓")
+            elif(penkick2 < pendef2):
+                print(team2 + " MISSES!")
+                print(team1 + " - " +  str(pen1score) +" || " + team2 + " - " + str(pen2score))
+                print("")
+                time.sleep(2)
+                pen2summary.append("✗")
+            if(abs(pen2score - pen1score) > (5 - penround)):
+                wincondition = "true"
+                
+        if(pen1score == pen2score):
+            while(pen1score == pen2score):
+                penround = penround + 1
+                print("")
+                print("Penalty Round: " + str(penround))
+                print("")
+                time.sleep(1)
+                penkick1 = random.randint(0,int(ovr1))
+                pendef1 = random.randint(0,int(ovr2))
+                print(team1 + " gets ready for the kick")
+                print("")
+                time.sleep(2)
+                if(penkick1 >= pendef1):
+                    print(team1 + " PUTS IT IN!")
+                    pen1score = pen1score + 1
+                    print(team1 + " - " +  str(pen1score) +" || " + team2 + " - " + str(pen2score))
+                    print("")
+                    time.sleep(2)
+                    pen1summary.append("✓")
+                elif(penkick1 < pendef1):
+                    print(team1 + " MISSES!")
+                    print(team1 + " - " +  str(pen1score) +" || " + team2 + " - " + str(pen2score))
+                    print("")
+                    time.sleep(2)
+                    pen1summary.append("✗")
+                print("")
+                print(team2 + " gets ready for the kick")
+                print("")
+                time.sleep(2)
+                penkick2 = random.randint(0,int(ovr2))
+                pendef2 = random.randint(0,int(ovr1))
+                if(penkick2 >= pendef2):
+                    print(team2 + " PUTS IT IN!")
+                    pen2score = pen2score + 1
+                    print(team1 + " - " +  str(pen1score) +" || " + team2 + " - " + str(pen2score))
+                    print("")
+                    time.sleep(2)
+                    pen2summary.append("✓")
+                elif(penkick2 < pendef2):
+                    print(team2 + " MISSES!")
+                    print(team1 + " - " +  str(pen1score) +" || " + team2 + " - " + str(pen2score))
+                    print("")
+                    time.sleep(2)
+                    pen2summary.append("✗")
+
+        print(team1 + " - " +  str(team1score) + "(" + str(pen1score) + ")" +" || " + team2 + " - " + str(team2score)+ "(" + str(pen2score) + ")")      
+        if(pen1score > pen2score):
+            print(team1 + " WINS THE GAME!!!")
+        if(pen2score > pen1score):
+            print(team2 + " WINS THE GAME!!!")
+        print("")
+        print("Game summary:")
+        if((team1score + team2score) >= 1):
+            print(team1 + " goals:")
+            for a in range(0, len(gamesummary1)):
+                print(gamesummary1[a])
+            print(team2 + " goals:")
+            for a in range(0, len(gamesummary2)):
+                print(gamesummary2[a])
+        print("")        
+        print("Penalty Summary:")
+        for x in range(0, len(pen1summary)):
+            print("Round " + str(x+1) + ": "+ team1 + " - " + pen1summary[x] + " || " + team2 + " - " + pen2summary[x])
+
+
+
